@@ -696,6 +696,7 @@ require('lazy').setup({
             '--query-driver=/usr/bin/arm-none-eabi-*',
           },
         },
+        robotcode = {},
         -- gopls = {},
         -- pyright = {},
         rust_analyzer = {},
@@ -753,7 +754,7 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            vim.lsp.config(server_name, server)
           end,
         },
       }
@@ -1044,6 +1045,26 @@ require('lazy').setup({
     },
   },
 })
+local lspconfig = require 'lspconfig'
+
+lspconfig.robotcode.setup {
+  cmd = { 'robotcode', 'language-server' },
+  cmd_env = {
+    PATH = '/home/runski/envs/robot_framework/bin:' .. vim.fn.getenv 'PATH',
+    VIRTUAL_ENV = '/home/runski/envs/robot_framework',
+    PYTHONPATH = '/home/runski/envs/robot_framework/lib/python3.13/site-packages',
+  },
+  settings = {
+    python = {
+      pythonPath = '/home/runski/envs/robot_framework/bin/python',
+    },
+    robot = {
+      pythonpath = {
+        '/home/runski/envs/robot_framework/lib/python3.13/site-packages',
+      },
+    },
+  },
+}
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
