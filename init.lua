@@ -102,7 +102,7 @@ vim.g.have_nerd_font = true
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -267,7 +267,6 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
   -- add plugins here
-
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -690,12 +689,12 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {
-          cmd = {
-            'clangd',
-            '--query-driver=/usr/bin/arm-none-eabi-*',
-          },
-        },
+        -- clangd = {
+        --   cmd = {
+        --     'clangd',
+        --     '--query-driver=/usr/bin/arm-none-eabi-*',
+        --   },
+        -- },
         robotcode = {},
         -- gopls = {},
         -- pyright = {},
@@ -920,9 +919,11 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'ayu'
+      vim.cmd.colorscheme 'catppuccin-frappe'
     end,
   },
+  -- Catppuccin themes
+  { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
@@ -1074,11 +1075,13 @@ vim.lsp.enable 'robotcode'
 vim.lsp.config('clangd', {
   cmd = {
     'clangd',
-    '--query-driver=/usr/bin/arm-none-eabi-*',
+    --    '--query-driver=/usr/bin/arm-none-eabi-*',
+    '--query-driver=/home/runski/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/*',
+    '--clang-tidy',
+    '--compile-commands-dir=build',
   },
 })
-
-vim.lsp.enable 'clangd'
+-- vim.lsp.enable 'clangd'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
